@@ -18,18 +18,22 @@ def solution(park, routes):
                 b -= 1
                 if j == int(i[2]) - 1:
                     y = b
+                    print("4-1(if/N). b = {0} / y = {1}".format(b, y))
             elif i[0] == 'S' and b != len(park)-1 and park[b+1][a] != 'X':
                 b += 1
                 if j == int(i[2]) - 1:
                     y = b
+                    print("4-2(if/S). b = {0} / y = {1}".format(b, y))
             elif i[0] == 'W' and a != 0 and park[b][a-1] != 'X':
                 a -= 1
                 if j == int(i[2]) - 1:
                     x = a
+                    print("4-3(if/W). a = {0} / x = {1}".format(a, x))
             elif i[0] == 'E' and a != len(park[0]) - 1 and park[b][a+1] != 'X':
                 a += 1
                 if j == int(i[2]) - 1:
                     x = a
+                    print("4-4(if/E). a = {0} / x = {1}".format(a, x))
     return [x, y]
 
 park = ["OOS", "OOO", "OOO"]
