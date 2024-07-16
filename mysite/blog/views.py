@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from django.http import HttpResponse
+from django.http import HttpResponse, Http404
 from .models import Post
 
 # Create your views here.
@@ -22,5 +22,8 @@ def list(request):
     return HttpResponse(titles)
 
 def detail(request, id):
-    post = Post.objects.get(id=id)
+    try:
+        post = Post.objects.get(id=id)
+    except Post.DoesNotExist:
+        return Http404('존재하지 않는 데이터')
     return HttpResponse(post.title)
