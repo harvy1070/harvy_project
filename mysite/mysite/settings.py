@@ -25,7 +25,7 @@ SECRET_KEY = "django-insecure-!6z6m$h1ci@&76&nu2=c%8)o8-)zzk4y)+5c7oa*n108(hq(an
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -37,7 +37,7 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
-    "blog",
+    "blog.apps.BlogConfig",
     "music",
 ]
 
@@ -77,8 +77,12 @@ WSGI_APPLICATION = "mysite.wsgi.application"
 
 DATABASES = {
     "default": {
-        "ENGINE": "django.db.backends.sqlite3",
-        "NAME": BASE_DIR / "chinook.db",
+        "ENGINE": "django.db.backends.mysql",
+        "HOST": "127.0.0.1",
+        "PORT": '3306',
+        "NAME": 'mydb',
+        "USER": 'root',
+        "PASSWORD": 'tmdghl11!!',
     }
 }
 
