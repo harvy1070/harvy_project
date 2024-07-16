@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
 from django.http import HttpResponse, Http404
 from .models import Post
 
@@ -15,15 +15,25 @@ def test3(request, year, month, day):
 
 def list(request):
     post_list = Post.objects.all()
-    titles = ""
-    for post in post_list:
-        titles += post.title
-        
-    return HttpResponse(titles)
+    return render(request, 'blog/list.html', {'post_list':post_list})
 
 def detail(request, id):
-    try:
-        post = Post.objects.get(id=id)
-    except Post.DoesNotExist:
-        return Http404('존재하지 않는 데이터')
-    return HttpResponse(post.title)
+    post = get_object_or_404(Post, id=id)
+    return render(request, 'blog/detail.html', {'post':post})
+
+def test4(request):
+    return render(request, 'blog/test4.html', {'score':70})
+
+def test5(request):
+    var = '''
+          Miracles happen to only those who believe in them.
+          Think like a man of action and act like man of thought.
+          Courage is very important. Like a muscle, it is strengthened by use.
+          Life is the art of drawing sufficient conclusions from insufficient premises.
+          By doubting we come at the truth.
+          A man that has no virtue in himself, ever envies virtue in others.
+          When money speaks, the truth keeps silent.
+          Better the last smile than the first laughter.
+          '''
+    
+    return render(request, 'blog/test5.html', {'var':var})

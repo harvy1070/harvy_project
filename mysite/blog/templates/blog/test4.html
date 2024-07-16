@@ -1,0 +1,17 @@
+{% if score %}
+    점수 : {{score}}
+{% endif %} <br>
+
+{% if score >= 60 %}
+    합격
+{% else %}
+    불합격
+{% endif %}<br>
+
+{% if score >= 90 %}
+    A등급
+{% elif score >= 80 %}
+    B등급
+{% else %}
+    C등급
+{% endif %}

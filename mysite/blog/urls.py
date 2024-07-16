@@ -7,5 +7,7 @@ urlpatterns = [
     path('test3/<year>/<month>/<day>/', views.test3),
     path('', views.list),
     path('<int:id>/', views.detail),
+    path('test4/', views.test4),
+    path('test5/', views.test5),
 ]
 
