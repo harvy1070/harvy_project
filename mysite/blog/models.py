@@ -8,7 +8,7 @@ class Post(models.Model):
     def __str__(self):
         return self.title
     
-    tag = models.ManyToManyField('Tag', null=True, blank=True)
+    tag = models.ManyToManyField('Tag', blank=True)
     
 # 1:M 모델 관계 설정
 class Comment(models.Model):

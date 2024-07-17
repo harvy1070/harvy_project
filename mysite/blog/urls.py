@@ -9,5 +9,8 @@ urlpatterns = [
     path('<int:id>/', views.detail),
     path('test4/', views.test4),
     path('test5/', views.test5),
+    path('test6/', views.test6),
+    path('profile/', views.profile),
+    path('tag/<id>', views.tag_list),
 ]
 

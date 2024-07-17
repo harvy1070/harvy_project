@@ -1,6 +1,7 @@
 from django.shortcuts import render, get_object_or_404
 from django.http import HttpResponse, Http404
-from .models import Post
+from .models import Post, User, Tag
+from django.utils import timezone
 
 # Create your views here.
 def test1(request):
@@ -12,14 +13,6 @@ def test2(request, no):
 
 def test3(request, year, month, day):
     return HttpResponse(f"년:{year} 월:{month} 일:{day}")
-
-def list(request):
-    post_list = Post.objects.all()
-    return render(request, 'blog/list.html', {'post_list':post_list})
-
-def detail(request, id):
-    post = get_object_or_404(Post, id=id)
-    return render(request, 'blog/detail.html', {'post':post})
 
 def test4(request):
     return render(request, 'blog/test4.html', {'score':70})
@@ -37,3 +30,29 @@ def test5(request):
           '''
     
     return render(request, 'blog/test5.html', {'var':var})
+
+def test6(request):
+    d1 = timezone.now()
+    d2 = timezone.datetime(2001,3,19)
+    d3 = timezone.datetime(2030,3,19)
+    
+    return render(request, 'blog/test6.html', {'date1':d1, 'date2':d2, 'date3':d3})
+
+def list(request):
+    post_list = Post.objects.all()
+    return render(request, 'blog/list.html', {'post_list':post_list})
+
+def detail(request, id):
+    post = get_object_or_404(Post, id=id)
+    comment_all = post.comments.all()
+    tag_list = post.tag.all()
+    return render(request, 'blog/detail.html', {'post':post, 'comment_all':comment_all, 'tag_list':tag_list})
+
+def profile(request):
+    user = User.objects.get(id=1)
+    return render(request, 'blog/profile.html', {'user':user})
+
+def tag_list(request, id):
+    tag = Tag.objects.get(id=id)
+    post_list = tag.post_set.all()
+    return render(request, 'blog/list.html', {'post_all':post_list})
