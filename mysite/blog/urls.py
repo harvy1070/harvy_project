@@ -12,5 +12,7 @@ urlpatterns = [
     path('test6/', views.test6),
     path('profile/', views.profile),
     path('tag/<id>', views.tag_list),
+    path('test7/', views.test7),
+    path('new/', views.post_create),
 ]
 

@@ -1,0 +1,31 @@
+{% extends "layout.html" %}
+{% block title %} Form Test {% endblock %}
+{% block content %}
+    <form action="" method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+        ID : <input type="text" name="id"><br>
+        PASSWORD : <input type="password" name="pwd"><br>
+
+        PHOTO : <input type="file" name="image"><br>
+
+        SEX :
+        <input type="radio" name="gender" value="male"> MALE
+        <input type="radio" name="gender" value="female"> FEMALE <br>
+
+        INTEREST :
+        <input type="checkbox" name="interest" value="AI"> AI
+        <input type="checkbox" name="interest" value="BD"> BIG DATA
+        <input type="checkbox" name="interest" value="DA"> DATA ARCHITECTURE <br>
+
+        AGE :
+        <select name="age">
+            <option value="2"> 20 ~ </option>
+            <option value="3"> 30 ~ </option>
+            <option value="4"> 40 ~ </option>
+        </select> <br>
+
+        REMARK : <br>
+        <textarea cols="30" rows="10" name="remark"></textarea><br>
+        <input type="submit" value="확인">
+    </form>
+{% endblock %}

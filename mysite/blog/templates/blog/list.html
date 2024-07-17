@@ -6,7 +6,15 @@
 {% block content %}
     <h1>Post 목록 보기</h1>
 
+    {% comment %} 검색기능 {% endcomment %}
+    <form action="" method="get">
+        {% csrf_token %}
+        SEARCHING : <input type="text" name="keyword" value="{{q|default:''}}">
+        <input type="submit" value="검색">
+    </form>
+
     {% for post in post_list %}
         <a href="{{post.id}}"> {{post.title}} </a> <br>
     {% endfor %}
+    <a href="/blog/new/"> [Writing] </a>
 {% endblock content %}

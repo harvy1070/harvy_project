@@ -2,8 +2,9 @@ from django.shortcuts import render, get_object_or_404
 from django.http import HttpResponse, Http404
 from .models import Post, User, Tag
 from django.utils import timezone
+from .forms import PostForm
 
-# Create your views here.
+# TEST LIST
 def test1(request):
     return HttpResponse("blog/test1 응답")
 
@@ -38,9 +39,21 @@ def test6(request):
     
     return render(request, 'blog/test6.html', {'date1':d1, 'date2':d2, 'date3':d3})
 
+def test7(request):
+    print('요청방식 : ', request.method)
+    print('GET 방식 : ', request.GET)
+    print('POST 방식 : ', request.POST)
+    print('업로드 파일 : ', request.FILES)
+    
+    return render(request, 'blog/form_test.html')
+
+# PAGE LIST
 def list(request):
     post_list = Post.objects.all()
-    return render(request, 'blog/list.html', {'post_list':post_list})
+    search_key = request.GET.get("keyword")
+    if search_key:
+        post_list = Post.objects.filter(title__icontains=search_key)
+    return render(request, 'blog/list.html', {'post_list':post_list, 'q':search_key})
 
 def detail(request, id):
     post = get_object_or_404(Post, id=id)
@@ -56,3 +69,15 @@ def tag_list(request, id):
     tag = Tag.objects.get(id=id)
     post_list = tag.post_set.all()
     return render(request, 'blog/list.html', {'post_all':post_list})
+
+def post_create(request):
+    if request.method == 'POST':
+        form = PostForm(request.POST)
+        if form.is_valid():
+            print(form.cleaned_data)
+            # 딕셔너리 언패킹
+            Post.objects.create(**form.cleaned_data)
+            return HttpResponse("추가 작업 완료")
+    else:
+        form = PostForm()
+        return render(request, 'blog/post_form.html', {'form':form})
