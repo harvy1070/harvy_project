@@ -19,4 +19,8 @@
     {% for tag in tag_list %}
         #<a href="/blog/tag/{{tag.id}}">{{tag.name}}</a>
     {% endfor %}
+    <hr>
+    <a href="{% url 'blog:list' %}"> [List] </a>
+    <a href="{% url 'blog:update' post.id %}"> [Update] </a> 
+    <a href="{% url 'blog:delete' post.id %}"> [Delete] </a>
 {% endblock content %}

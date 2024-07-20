@@ -14,7 +14,8 @@
     </form>
 
     {% for post in post_list %}
-        <a href="{{post.id}}"> {{post.title}} </a> <br>
+        <!-- <a href="{{post.id}}"> {{post.title}} </a> <br> -->
+        <a href="{% url 'blog:detail' post.id %}"> {{post.title}} </a><br>
     {% endfor %}
-    <a href="/blog/new/"> [Writing] </a>
+    <a href="{% url 'blog:create' %}"> [Writing] </a>
 {% endblock content %}

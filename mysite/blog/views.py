@@ -1,8 +1,8 @@
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render, get_object_or_404, redirect
 from django.http import HttpResponse, Http404
 from .models import Post, User, Tag
 from django.utils import timezone
-from .forms import PostForm
+from .forms import PostForm, PostModelForm
 
 # TEST LIST
 def test1(request):
@@ -72,12 +72,32 @@ def tag_list(request, id):
 
 def post_create(request):
     if request.method == 'POST':
-        form = PostForm(request.POST)
+        form = PostModelForm(request.POST)
         if form.is_valid():
             print(form.cleaned_data)
             # 딕셔너리 언패킹
-            Post.objects.create(**form.cleaned_data)
-            return HttpResponse("추가 작업 완료")
+            # post = Post.objects.create(**form.cleaned_data)
+            post = form.save()
+            return redirect(post)
     else:
-        form = PostForm()
+        form = PostModelForm()
         return render(request, 'blog/post_form.html', {'form':form})
+    
+def post_update(request, id):
+    post = get_object_or_404(Post, id=id)
+    if request.method == 'POST':
+        form = PostModelForm(request.POST, instance=post)
+        if form.is_valid():
+            form.save()
+            return redirect('blog:list')
+    else:
+        form = PostModelForm(instance=post)
+        return render(request, 'blog/post_update.html', {'form':form})
+    
+def post_delete(request, id):
+    post = Post.objects.get(id=id)
+    if request.method == 'POST':
+        post.delete()
+        return redirect('blog:list')
+    else:
+        return render(request, 'blog/post_delete.html', {'post':post})
