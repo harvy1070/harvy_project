@@ -77,7 +77,9 @@ def post_create(request):
             print(form.cleaned_data)
             # 딕셔너리 언패킹
             # post = Post.objects.create(**form.cleaned_data)
-            post = form.save()
+            post = form.save(commit=False)
+            post.ip = request.META['REMOTE_ADDR']
+            post.save()
             return redirect(post)
     else:
         form = PostModelForm()
@@ -101,3 +103,4 @@ def post_delete(request, id):
         return redirect('blog:list')
     else:
         return render(request, 'blog/post_delete.html', {'post':post})
+    
