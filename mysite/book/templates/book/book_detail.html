@@ -6,4 +6,5 @@
     Author : {{book.author}}<br>
     Publisher : {{book.publisher}}<br>
     <a href="{% url 'book:update' book.id %}">[Modify]</a>
+    <a href="{% url 'book:delete' book.id %}">[Delete]</a>
 {% endblock %}
