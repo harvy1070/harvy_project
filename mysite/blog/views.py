@@ -1,5 +1,5 @@
 from django.shortcuts import render, get_object_or_404, redirect
-from django.http import HttpResponse, Http404
+from django.http import HttpResponse, Http404, HttpResponseRedirect
 from .models import Post, User, Tag
 from django.utils import timezone
 from .forms import PostForm, PostModelForm
@@ -103,4 +103,3 @@ def post_delete(request, id):
         return redirect('blog:list')
     else:
         return render(request, 'blog/post_delete.html', {'post':post})
-    
