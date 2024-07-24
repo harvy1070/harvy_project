@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/4.2/ref/settings/
 """
 
 from pathlib import Path
+import os
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -40,6 +41,7 @@ INSTALLED_APPS = [
     "blog.apps.BlogConfig",
     "music",
     "book",
+    "gallery",
 ]
 
 MIDDLEWARE = [
@@ -122,7 +124,22 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.2/howto/static-files/
 
+# APP/static, 앱 별로 사용되는 static 파일이 위치하는 곳
 STATIC_URL = "static/"
+
+# 모든 앱들이 공통으로 사용하는 static 경로
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, 'mysite', 'static'),
+]
+
+# 설정으로 지정된 곳으로, 개발 완료 후 실제로 서비스 하는 위치
+# collectstatic을 실행할 때 모든 정적 파일이 모이는 디렉토리
+STATIC_ROOT = os.path.join(BASE_DIR, 'static')
+
+# Media File
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
