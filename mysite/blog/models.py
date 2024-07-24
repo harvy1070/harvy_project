@@ -20,7 +20,7 @@ class Comment(models.Model):
     message = models.TextField()
     created = models.DateField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
-    
+    deleted = models.BooleanField(default=False)
     
 class User(models.Model):
     name = models.CharField(max_length=50)
