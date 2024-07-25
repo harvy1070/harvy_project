@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     "music",
     "book",
     "gallery",
+    "accounts",
 ]
 
 MIDDLEWARE = [
@@ -145,3 +146,13 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
+
+
+# Accounts 환경변수
+LOGIN_REDIRECT_URL = '/accounts/login/'
+LOGOUT_REDIRECT_URL = '/blog/'
+
+# email 정보 불러옴
+try:
+    from .local_settings import *
+except ImportError:pass
