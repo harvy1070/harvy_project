@@ -14,3 +14,27 @@ def on_send_mail(sender, **kwargs):
         send_mail('가입인사', '가입을 환영합니다.', 'harvy13@naver.com', [user.email], fail_silently=False)
         
 post_save.connect(on_send_mail, sender=settings.AUTH_USER_MODEL)
+
+# 중복 로그인 방지
+from django.contrib.sessions.backends.db import SessionStore
+from django.contrib.auth.signals import user_logged_in
+# SessionStore >> 세션 데이터 저장 및 관리하기 위한 클래스
+
+class UserSession(models.Model):
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    session_key = models.CharField(max_length=40)
+    created_at = models.DateTimeField(auto_now_add=True)
+
+def block_duplicate_login(sender, request, user, **kwargs):
+    login_user_list = UserSession.objects.filter(user=user)
+    
+    for user_session in login_user_list:
+        session = SessionStore(user_session.session_key)
+        # session.delete()
+        session['blocked'] = True
+        session.save()
+    
+    session_key = request.session.session_key
+    UserSession.objects.create(user=user, session_key = session_key)
+
+user_logged_in.connect(block_duplicate_login)

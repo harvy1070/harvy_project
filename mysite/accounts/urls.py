@@ -9,7 +9,7 @@ urlpatterns = [
     path('signup/', views.signup, name='signup'),
     
     path(
-        "password_change/", auth_views.PasswordChangeView.as_view(), name="password_change"
+        "password_change/", views.MypasswordChangeView.as_view(), name="password_change"
     ),
     path(
         "password_change/done/",
@@ -17,4 +17,6 @@ urlpatterns = [
         name="password_change_done",
     ),
     path('profile/', TemplateView.as_view(template_name='registration/profile.html'), name='profile'),
+    path('cookie/<code>/', views.cookie_test),
+    path('session/<int:code>', views.session_test),
 ]
