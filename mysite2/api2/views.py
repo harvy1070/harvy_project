@@ -52,5 +52,5 @@ class PostLikeAPIView(UpdateAPIView):
         # 미리 가져온 객체 캐시 지우기(일관성 유지)
         if getattr(instance, '_prefetched_objects_cache', None):
             instance._prefetched_objects_cache = {}
-        return Response(serializer.data)
+        return Response(data['like'])
             
